@@ -6,17 +6,17 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const images = [
-    '/images/image001.jpg',
-    '/images/image002.jpg',
-    '/images/image003.jpg',
-    '/images/image004.jpg',
+    '/nextjs_test/images/image001.jpg',
+    '/nextjs_test/images/image002.jpg',
+    '/nextjs_test/images/image003.jpg',
+    '/nextjs_test/images/image004.jpg',
   ];
 
   return (
     <main className="min-h-screen max-w-[1400px] mx-auto flex flex-col">
       <div className="flex justify-between items-center py-4 px-6">
         <Image
-          src="/logos/logo_left.png"
+          src="/nextjs_test/logos/logo_left.png"
           alt="Left Logo"
           width={100}
           height={40}
@@ -29,7 +29,7 @@ export default function Home() {
           className="cursor-pointer"
         >
           <Image
-            src="/logos/logo_right.png"
+            src="/nextjs_test/logos/logo_right.png"
             alt="Right Logo"
             width={100}
             height={40}
