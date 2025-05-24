@@ -19,12 +19,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'npm'
+
+      - name: List files
+        run: ls -la
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
         run: npm run build
+        env:
+          CI: false
+
+      - name: List build output
+        run: ls -la out/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
