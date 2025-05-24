@@ -9,11 +9,23 @@ permissions:
   contents: write
 
 jobs:
-  deploy:
+  debug-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Debug - List workspace contents before setup
+        run: |
+          pwd
+          ls -la
+          echo "Node version"
+          node -v
+          echo "NPM version"
+          npm -v
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -21,22 +33,51 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      - name: List files
-        run: ls -la
+      - name: Debug - Environment info
+        run: |
+          echo "GitHub Workspace: $GITHUB_WORKSPACE"
+          echo "GitHub Ref: $GITHUB_REF"
+          echo "GitHub SHA: $GITHUB_SHA"
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          echo "Installed dependencies:"
+          npm list --depth=0
+
+      - name: Debug - Check next.config.js
+        run: |
+          echo "Content of next.config.js:"
+          cat next.config.js
 
       - name: Build
-        run: npm run build
+        run: |
+          echo "Starting build process..."
+          npm run build
+          echo "Build completed"
         env:
           CI: false
+          NODE_ENV: production
 
-      - name: List build output
-        run: ls -la out/
+      - name: Debug - List build output
+        run: |
+          echo "Contents of the build directory:"
+          ls -la out/
+          echo "Total size of build:"
+          du -sh out/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out 
+          publish_dir: ./out
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy to GitHub Pages'
+
+      - name: Debug - Final status
+        if: always()
+        run: |
+          echo "Deployment process completed"
+          echo "Check the gh-pages branch for the deployed content" 
