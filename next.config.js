@@ -4,8 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: '/nextjs_test',
-  assetPrefix: '/nextjs_test/',
+  basePath: process.env.NODE_ENV === 'production' ? '/nextjs_test' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/nextjs_test/' : '',
   trailingSlash: true,
 }
 

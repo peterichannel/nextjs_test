@@ -4,19 +4,20 @@ import { useState } from 'react';
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const basePath = process.env.NODE_ENV === 'production' ? '/nextjs_test' : '';
 
   const images = [
-    '/nextjs_test/images/image001.jpg',
-    '/nextjs_test/images/image002.jpg',
-    '/nextjs_test/images/image003.jpg',
-    '/nextjs_test/images/image004.jpg',
+    `${basePath}/images/image001.jpg`,
+    `${basePath}/images/image002.jpg`,
+    `${basePath}/images/image003.jpg`,
+    `${basePath}/images/image004.jpg`,
   ];
 
   return (
     <main className="min-h-screen max-w-[1400px] mx-auto flex flex-col">
       <div className="flex justify-between items-center py-4 px-6">
         <Image
-          src="/nextjs_test/logos/logo_left.png"
+          src={`${basePath}/logos/logo_left.png`}
           alt="Left Logo"
           width={100}
           height={40}
@@ -29,7 +30,7 @@ export default function Home() {
           className="cursor-pointer"
         >
           <Image
-            src="/nextjs_test/logos/logo_right.png"
+            src={`${basePath}/logos/logo_right.png`}
             alt="Right Logo"
             width={100}
             height={40}
