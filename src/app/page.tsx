@@ -5,6 +5,7 @@ import { useState } from 'react';
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const basePath = process.env.NODE_ENV === 'production' ? '/nextjs_test' : '';
+  const port = process.env.NODE_ENV === 'production' ? '' : ':3003';
 
   const images = [
     `${basePath}/images/image001.jpg`,
